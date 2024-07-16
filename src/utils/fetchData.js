@@ -10,7 +10,7 @@ export const fetchAllData = async () => {
     }
 }
 
-export const fetchListData = async (id) => {
+export const fetchList = async (id) => {
     try {
         const response = await api.get(`/todolists/${id}`);
         return response.data;
@@ -19,3 +19,14 @@ export const fetchListData = async (id) => {
         throw error;
     }
 }
+
+export const fetchListData = async (id) => {
+    try {
+        const response = await api.get(`/todolists/${id}/tasks`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching list tasks:", error);
+        throw error;
+    }
+}
+
