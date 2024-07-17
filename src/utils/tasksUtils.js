@@ -1,8 +1,16 @@
 import api from "./api";
 
-export const addTask = async (tasks, newTask, listId) => {
+export const addTask = async (tasks, newTask, listId, newPriority, newDueDate) => {
     try {
-        const response = await api.post(`/todolists/${listId}/tasks`, { text: newTask, taskStatus: 'new', taskListId: listId });
+
+        const addNewTask = {
+            text: newTask,
+            taskStatus: 'new',
+            todolistId: listId,
+            priority: newPriority,
+            dueDate: newDueDate
+        }
+        const response = await api.post(`/todolists/${listId}/tasks`, addNewTask);
         return [...tasks, response.data];
     } catch (error) {
         console.error("Error adding task:", error);
@@ -10,13 +18,24 @@ export const addTask = async (tasks, newTask, listId) => {
     }
 };
 
-
-export const updateTask = async (tasks, listId, id, newText) => {
+export const updateTask = async (tasks, listId, id, newText, editPriority, editDueDate) => {
     try {
         const taskToUpdate = tasks.find(task => task.id === id);
-        const response = await api.put(`/todolists/${listId}/tasks/${id}`, { ...taskToUpdate, text: newText, editing: !taskToUpdate.editing });
+        const updatedTask = {
+            ...taskToUpdate,
+            text: newText,
+            priority: editPriority,
+            dueDate: editDueDate
+        };
 
-        const updatedTasks = tasks.map(task => task.id === id ? response.data : task);
+        const response = await api.put(`/todolists/${listId}/tasks/${id}`, updatedTask);
+
+        const updatedTasks = tasks.map(task => {
+            if (task.id === id) {
+                return response.data;
+            }
+            return task;
+        });
 
         return updatedTasks;
     } catch (error) {
@@ -24,6 +43,7 @@ export const updateTask = async (tasks, listId, id, newText) => {
         throw error;
     }
 };
+
 
 export const updateStatus = async (tasks, id, newStatus, listId) => {
     try {
@@ -46,10 +66,20 @@ export const deleteTask = async (tasks, id, listId) => {
     }
 };
 
-export const toggleEditing = async (tasks, id, listId, newText) => {
+export const toggleEditing = async (tasks, id, listId, newText, editPriority, editDueDate) => {
     try {
         const taskToToggle = tasks.find(task => task.id === id);
-        const response = await api.put(`/todolists/${listId}/tasks/${id}`, { ...taskToToggle, editing: !taskToToggle.editing, text: newText });
+        const toggleTask = {
+            ...taskToToggle,
+            editing: !taskToToggle.editing,
+            text: newText,
+            priority: editPriority,
+            dueDate: editDueDate
+        };
+
+
+        const response = await api.put(`/todolists/${listId}/tasks/${id}`, toggleTask);
+
         return tasks.map(task => task.id === id ? response.data : task);
     } catch (error) {
         console.error("Error toggling editing:", error);

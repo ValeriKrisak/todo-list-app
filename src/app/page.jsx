@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from "react";
 import TodoList from "@/components/TodoList";
 import ListCard from "@/components/ListCard";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { fetchAllData } from "@/utils/fetchData";
+import { TodoListProvider } from "@/context/TodoListContext";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -33,65 +35,28 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between md:p-24 sm:w-full">
-      {!loading ? (
-        <div className="w-full mb-4">
-          <TodoList listId={listId} />
-        </div>
+      {loading ? (
+        <LoadingSpinner loading={loading} />
       ) : (
-        <div className="justify-items-center">
-          <div role="status" className="flex items-center">
-            <div className="w-12 h-12 relative">
-              <svg
-                aria-hidden="true"
-                className={`w-full h-full text-blue-300 ${
-                  loading ? "animate-pulse" : ""
-                }`}
-                viewBox="0 0 100 101"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="48"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  fill="none"
-                />
-                <path
-                  d="M50 2
-            a 48 48 0 0 1 0 96
-            a 48 48 0 0 1 0 -96"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  fill="none"
-                  strokeLinecap="round"
-                  style={{
-                    strokeDasharray: loading ? "150" : "0",
-                    transition: "stroke-dasharray 2s ease",
-                  }}
-                />
-              </svg>
-              <span className="sr-only">Loading...</span>
+        <TodoListProvider listId={listId}>
+          <div className="w-full mb-4">
+            <TodoList />
+          </div>
+
+          <div className="p-3 text-center border-2 rounded bg-blue-50 dark:bg-transparent">
+            <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-4 p-4">
+              <>
+                {data.map((item) => (
+                  <ListCard
+                    key={item.id}
+                    item={item}
+                    onShowList={handleShowList}
+                  />
+                ))}
+              </>
             </div>
-            {loading && <span className="ml-4">Loading...</span>}
           </div>
-        </div>
-      )}
-      {!loading && (
-        <div className="p-3 text-center border-2 rounded bg-blue-50 dark:bg-transparent">
-          <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-4 p-4">
-            <>
-              {data.map((item) => (
-                <ListCard
-                  key={item.id}
-                  item={item}
-                  onShowList={handleShowList}
-                />
-              ))}
-            </>
-          </div>
-        </div>
+        </TodoListProvider>
       )}
     </main>
   );

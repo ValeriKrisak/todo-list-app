@@ -9,3 +9,16 @@ export const validateInput = (value, maxLength) => {
     }
     return '';
 };
+
+export const validateDate = (dateString) => {
+    const selectedDate = new Date(dateString);
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    if (selectedDate < today) {
+        return 'Due date cannot be in the past.';
+    }
+
+    return '';
+};

@@ -13,6 +13,8 @@ const useTodoList = (listId) => {
     const [listData, setListData] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState("");
+    const [newPriority, setNewPriority] = useState("Medium");
+    const [newDueDate, setNewDueDate] = useState(new Date);
     const [newTaskError, setNewTaskError] = useState("");
 
     useEffect(() => {
@@ -48,7 +50,7 @@ const useTodoList = (listId) => {
     const handleAddTask = async () => {
         if (newTask.trim() !== "") {
             try {
-                const maxLength = 70;
+                const maxLength = 80;
                 const validationError = validateInput(newTask, maxLength);
 
                 if (validationError) {
@@ -56,9 +58,11 @@ const useTodoList = (listId) => {
                     return;
                 }
 
-                const updatedTasks = await addTask(tasks, newTask, listId);
+                const updatedTasks = await addTask(tasks, newTask, listId, newPriority, newDueDate);
                 setTasks(updatedTasks);
                 setNewTask("");
+                setNewPriority("");
+                setNewDueDate(new Date);
                 setNewTaskError("");
             } catch (error) {
                 console.error("Error adding task:", error);
@@ -75,9 +79,9 @@ const useTodoList = (listId) => {
         }
     };
 
-    const handleEditTask = async (id, newText) => {
+    const handleEditTask = async (id, newText, editPriority, editDueDate) => {
         try {
-            const maxLength = 70;
+            const maxLength = 80;
             const validationError = validateInput(newText, maxLength);
 
             if (validationError) {
@@ -85,7 +89,7 @@ const useTodoList = (listId) => {
                 return;
             }
 
-            const updatedTasks = await updateTask(tasks, listId, id, newText);
+            const updatedTasks = await updateTask(tasks, listId, id, newText, editPriority, editDueDate);
             setTasks(updatedTasks);
             setNewTaskError("");
         } catch (error) {
@@ -93,9 +97,9 @@ const useTodoList = (listId) => {
         }
     };
 
-    const handleToggleEditing = async (id, newText) => {
+    const handleToggleEditing = async (id, newText, editPriority, editDueDate) => {
         try {
-            const updatedTasks = await toggleEditing(tasks, id, listId, newText);
+            const updatedTasks = await toggleEditing(tasks, id, listId, newText, editPriority, editDueDate);
             setTasks(updatedTasks);
         } catch (error) {
             console.error("Error toggling editing:", error);
@@ -116,8 +120,12 @@ const useTodoList = (listId) => {
         tasks,
         newTask,
         newTaskError,
-        setNewTaskError,
+        newPriority,
+        newDueDate,
         setNewTask,
+        setNewTaskError,
+        setNewPriority,
+        setNewDueDate,
         handleAddTask,
         handleEditTask,
         handleDeleteTask,
