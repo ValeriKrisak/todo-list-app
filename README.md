@@ -26,7 +26,7 @@ git clone https://github.com/ValeriKrisak/todo-list-app.git
 2. Navigate into the project directory:
 
 ```sh
-cd todolist-app
+cd todo-list-app
 ```
 
 3. Install dependencies:
