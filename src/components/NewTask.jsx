@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { useTodoListContext } from "@/context/TodoListContext";
-import { unixToDateInput, dateInputToUnix } from "@/utils/dateConversion";
+import { unixToDateInput, dateInputToUnix } from "@/utils/dateFormatter";
 
 export default function NewTask() {
   const {

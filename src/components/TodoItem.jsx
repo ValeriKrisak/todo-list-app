@@ -6,7 +6,11 @@ import PriorityBadge from "@/components/PriorityBadge";
 import DateBadge from "@/components/DateBadge";
 import UpdateTask from "./UpdateTask";
 import { useTodoListContext } from "@/context/TodoListContext";
-import { unixToDateInput, dateInputToUnix } from "@/utils/dateConversion";
+import {
+  unixToDateInput,
+  dateInputToUnix,
+  calculateDaysOverdue,
+} from "@/utils/dateFormatter";
 import { validateDate } from "@/utils/validation";
 
 export default function TodoItem({ item }) {
@@ -39,12 +43,13 @@ export default function TodoItem({ item }) {
   };
 
   const handleToggle = () => {
-    const dateValidationError = validateDate(updatedDueDate);
-    if (dateValidationError) {
-      setDateError(dateValidationError);
-      return;
+    if (editing) {
+      const dateValidationError = validateDate(updatedDueDate);
+      if (dateValidationError) {
+        setDateError(dateValidationError);
+        return;
+      }
     }
-
     setEditing(!editing);
     handleToggleEditing(
       item.id,
@@ -70,6 +75,8 @@ export default function TodoItem({ item }) {
     }
   };
 
+  const daysOverdue = calculateDaysOverdue(updatedDueDate);
+
   return (
     <div className="flex justify-center items-center w-full mb-1">
       <div className="w-full flex items-center">
@@ -87,6 +94,12 @@ export default function TodoItem({ item }) {
               <div className="flex text-justify text-sm items-center">
                 <PriorityBadge priority={updatedPriority} />
                 <DateBadge datebadge={dateInputToUnix(updatedDueDate)} />
+                {daysOverdue > 0 && item.taskStatus !== "done" && (
+                  <div className="text-red-400">
+                    This task is {daysOverdue} day{daysOverdue > 1 ? "s" : ""}{" "}
+                    overdue.
+                  </div>
+                )}
               </div>
             </>
           ) : (

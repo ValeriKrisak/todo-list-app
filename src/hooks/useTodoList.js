@@ -8,7 +8,7 @@ import {
     updateStatus,
 } from "@/utils/tasksUtils";
 import { validateInput, validateDate } from '../utils/validation';
-import { dateInputToUnix } from '@/utils/dateConversion';
+import { dateInputToUnix } from '@/utils/dateFormatter';
 
 const useTodoList = (listId) => {
     const [listData, setListData] = useState([]);

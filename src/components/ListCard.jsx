@@ -1,19 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faCalendarDay } from "@fortawesome/free-solid-svg-icons";
+import { formatDateCardList } from "@/utils/dateFormatter";
 
 export default function ListCard({ item, onShowList }) {
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-
-    const customFormattedDate = `${day}-${month}-${year} ${hours}:${minutes}`;
-    return customFormattedDate;
-  }
-
   return (
     <div className="block rounded bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 ">
       <div className="md:min-h-14">
@@ -28,7 +17,7 @@ export default function ListCard({ item, onShowList }) {
         </div>
         <div className="flex items-center">
           <FontAwesomeIcon icon={faCalendarDay} />
-          <p className="ml-2">{formatDate(item.createdAt)}</p>
+          <p className="ml-2">{formatDateCardList(item.createdAt)}</p>
         </div>
       </div>
 
