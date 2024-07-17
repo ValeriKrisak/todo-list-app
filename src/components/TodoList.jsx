@@ -16,8 +16,12 @@ export default function TodoList() {
         <NewTask />
       </div>
       <>
-        {tasks.length <= 0 ? (
-          <p>Please create some tasks for your this ToDo List</p>
+        {tasks.length === 0 ? (
+          <div className="flex pt-4 items-center">
+            <p>
+              This ToDo List doesn't have any tasks. Feel free to create some.
+            </p>
+          </div>
         ) : (
           <div className="pt-4">
             {tasks.map((task) => (

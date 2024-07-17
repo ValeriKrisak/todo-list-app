@@ -7,14 +7,15 @@ import {
     toggleEditing,
     updateStatus,
 } from "@/utils/tasksUtils";
-import { validateInput } from '../utils/validation';
+import { validateInput, validateDate } from '../utils/validation';
+import { dateInputToUnix } from '@/utils/dateConversion';
 
 const useTodoList = (listId) => {
     const [listData, setListData] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState("");
     const [newPriority, setNewPriority] = useState("Medium");
-    const [newDueDate, setNewDueDate] = useState(new Date);
+    const [newDueDate, setNewDueDate] = useState(dateInputToUnix(new Date));
     const [newTaskError, setNewTaskError] = useState("");
 
     useEffect(() => {
@@ -22,9 +23,11 @@ const useTodoList = (listId) => {
             const getData = async () => {
                 try {
                     const result = await fetchListData(listId);
-                    setTasks(result);
+                    if (result) { setTasks(result); } else { setNewTasks([]) }
+
                 } catch (error) {
                     console.error("Error fetching todo list:", error);
+                    setTasks([]);
                 }
             };
 
@@ -40,6 +43,7 @@ const useTodoList = (listId) => {
                     setListData(result);
                 } catch (error) {
                     console.error("Error fetching todo list:", error);
+                    setListData([])
                 }
             };
             getData();
@@ -50,18 +54,25 @@ const useTodoList = (listId) => {
     const handleAddTask = async () => {
         if (newTask.trim() !== "") {
             try {
+
                 const maxLength = 80;
                 const validationError = validateInput(newTask, maxLength);
+                const dateValidationError = validateDate(newDueDate);
 
                 if (validationError) {
                     setNewTaskError(validationError);
                     return;
                 }
 
+                if (dateValidationError) {
+                    setNewTaskError(dateValidationError);
+                    return;
+                }
+
                 const updatedTasks = await addTask(tasks, newTask, listId, newPriority, newDueDate);
                 setTasks(updatedTasks);
                 setNewTask("");
-                setNewPriority("");
+                setNewPriority("Medium");
                 setNewDueDate(new Date);
                 setNewTaskError("");
             } catch (error) {

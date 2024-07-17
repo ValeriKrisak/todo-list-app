@@ -23,10 +23,10 @@ export const fetchList = async (id) => {
 export const fetchListData = async (id) => {
     try {
         const response = await api.get(`/todolists/${id}/tasks`);
-        return response.data;
+        return (response.data);
     } catch (error) {
-        console.error("Error fetching list tasks:", error);
-        throw error;
+        // console.error("Error fetching list tasks:", error);
+        return [];
     }
 }
 

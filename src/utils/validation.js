@@ -1,3 +1,6 @@
+import { unixToDateInput } from '@/utils/dateConversion'
+
+
 export const validateMaxLength = (value, maxLength) => {
     return value.length <= maxLength;
 };
@@ -11,9 +14,19 @@ export const validateInput = (value, maxLength) => {
 };
 
 export const validateDate = (dateString) => {
-    const selectedDate = new Date(dateString);
-    const today = new Date();
+    const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
+    if (isoDateRegex.test(dateString)) {
+        return validateISODate(dateString);
+    } else {
+        const convertedUnixDate = unixToDateInput(dateString);
+        return validateISODate(convertedUnixDate);
+    }
+};
+
+const validateISODate = (isoDateString) => {
+    const selectedDate = new Date(isoDateString);
+    const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     if (selectedDate < today) {
@@ -22,3 +35,4 @@ export const validateDate = (dateString) => {
 
     return '';
 };
+

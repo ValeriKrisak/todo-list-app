@@ -77,7 +77,13 @@ export default function TodoItem({ item }) {
         <div className="ml-5 w-11/12">
           {!editing ? (
             <>
-              <p>{text}</p>
+              <p
+                className={`${
+                  item.taskStatus === "done" ? "line-through" : ""
+                }`}
+              >
+                {text}
+              </p>
               <div className="flex text-justify text-sm items-center">
                 <PriorityBadge priority={updatedPriority} />
                 <DateBadge datebadge={dateInputToUnix(updatedDueDate)} />
@@ -109,8 +115,9 @@ export default function TodoItem({ item }) {
           </button>
         ) : (
           <button
-            className="bg-teal-500 text-white rounded size-7 px-1 pb-0.5"
+            className="bg-teal-500 text-white rounded size-7 px-1 pb-0.5 disabled:bg-slate-500"
             onClick={handleToggle}
+            disabled={item.taskStatus === "done"}
           >
             <FontAwesomeIcon icon={faEdit} />
           </button>
