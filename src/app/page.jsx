@@ -43,7 +43,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between md:p-24 sm:w-full dark:bg-slate-800 dark:text-gray-200">
+    <main className="flex min-h-screen flex-col items-center justify-between md:p-24 sm:w-full dark:bg-slate-800 dark:text-gray-200 text-slate-800">
       <button
         className="fixed top-4 right-4 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded"
         onClick={toggleDarkMode}

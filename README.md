@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ToDoList App
 
-## Getting Started
+## Overview
 
-First, run the development server:
+The ToDoList App is a simple and efficient task management tool designed to help you stay organized and productive.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- **Task Management**: Add, edit, and delete tasks effortlessly.
+- **Priority Levels**: Set priority levels to categorize tasks by importance.
+- **Due Dates**: Assign due dates to keep track of deadlines.
+- **Cross-Platform**: Access your tasks from any device with web access.
+
+## Screenshots
+
+## Installation
+
+To run the ToDoList App locally, follow these steps:
+
+1. Clone this repository:
+
+```sh
+git clone https://github.com/ValeriKrisak/todo-list-app.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Navigate into the project directory:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+cd todolist-app
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Install dependencies:
 
-## Learn More
+```sh
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Start the application:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+5. Open your web browser and visit [http://localhost:3000](http://localhost:3000) to use the app.
 
-## Deploy on Vercel
+## Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Adding a Task**: Enter details for your task and at the end click on to "plus" button to save it.
+- **Editing a Task**: Click on edit button next to the task for updating of the details which you want to change. Don't forget to save your changes.
+- **Marking a Task as Done/Failed/New**: Click on the button <i class="fas fa-check-square"></i> next to a task to mark it as complete or failed or as new.
+- **Deleting a Task**: Click on the delete icon <i class="fas fa-trash"></i> next to a task to remove it from the list.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contributing
+
+Contributions are welcome! If you have suggestions for new features, improvements, or bug fixes, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Thanks to [GymBeam] for inspiration.
+- Icons used in the app are from [Font Awesome](https://fontawesome.com/).
