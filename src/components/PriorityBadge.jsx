@@ -2,13 +2,13 @@ export default function PriorityBadge({ priority }) {
   let badgeColor = "";
   switch (priority.toLowerCase()) {
     case "high":
-      badgeColor = "bg-red-300";
+      badgeColor = "bg-orange-300";
       break;
     case "medium":
-      badgeColor = "bg-amber-300";
+      badgeColor = "bg-indigo-300";
       break;
     case "low":
-      badgeColor = "bg-green-300";
+      badgeColor = "bg-blue-300";
       break;
     default:
       badgeColor = "bg-gray-300";
@@ -17,7 +17,7 @@ export default function PriorityBadge({ priority }) {
 
   return (
     <span
-      className={`inline-block px-2 text-center font-semibold lowercase text-white dark:text-slate-700 rounded ${badgeColor}`}
+      className={`bg-inline-block bg- px-2 text-center font-semibold lowercase text-white dark:text-slate-700 rounded ${badgeColor}`}
     >
       {priority}
     </span>

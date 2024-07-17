@@ -68,7 +68,7 @@ export default function NewTask() {
         </div>
         <div className="md:w-1/3 px-3 mb-6 md:mb-0">
           <button
-            className="w-full bg-teal-500 rounded text-white py-3 hover:bg-teal-300 disabled:bg-slate-200"
+            className="w-full bg-teal-500 rounded text-white py-3 hover:bg-teal-300 disabled:bg-slate-200 dark:disabled:bg-gray-300"
             onClick={handleAddTask}
             disabled={newTask.length <= 0}
           >
